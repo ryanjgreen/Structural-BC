@@ -19,7 +19,7 @@ export default function Form() {
             }
     
             const { firstName, lastName, email, password } = formData; // Destructure the fields
-            const response = await axios.post('http://localhost:5000/register', {
+            const response = await axios.post('https://my-python-backend-8ed37c8619d8.herokuapp.com/', {
                 firstName,
                 lastName,
                 email,
