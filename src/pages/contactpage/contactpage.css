@@ -17,8 +17,7 @@
     padding: 1vh;
     border-radius: 10px;
     width: 100%;
-    max-width: 40vw;
-    height: 70vh;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,14 +49,14 @@
     border: 1px solid #e9ecef;
     padding: 0.9em 1em;
     outline: none;
-    width: 30vw;
+    width: 375px;
     margin-bottom: 1em;
    /* Apply the same font-family */
   }
   
   .email,
   .name {
-    height: 5vh;
+    height: 35px;
   }
   
   .message {
@@ -74,14 +73,15 @@
     font-family: var(--font-family);
     font-weight: 500;
     font-size: 16px;
-    line-height: 4vh;
+    line-height: 20px;
     border: none;
     outline: none;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: .5vh;
-    margin-bottom: 1vh;
-    width: 30vw;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    width: 375px;
+    
 
  }
 
