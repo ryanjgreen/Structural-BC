@@ -95,6 +95,7 @@ const Contactpage = () => {
 
           </div>
         </form>
+        
       </div>
     </div>
   );

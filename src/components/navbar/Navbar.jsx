@@ -10,7 +10,6 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
 
-
   const handleLogout = () => {
     logout();
     // Optionally, you can redirect the user to a specific page after logout
@@ -25,21 +24,11 @@ const Navbar = () => {
             <img src={logo} alt="Logo" />
           </div>
         </Link>
-
-    
       </div>
 
       <div className="structuralBC__navbar-sign">
-  {isAuthenticated && user ? (
-    <div className="user-profile">
-      {/* <p className="user-name">{user.firstName}</p> */}
-      <FaUserCircle size={30} />
-      <button onClick={handleLogout}>Sign out</button> 
-
-    </div>
-  ) : (
-    <>
-     <div className="structuralBC__navbar-links_container">
+        {/* Always show these links */}
+        <div className="structuralBC__navbar-links_container">
           <p>
             <Link to="/">Home</Link>
           </p>
@@ -50,15 +39,25 @@ const Navbar = () => {
             <Link to="/contact">Contact</Link>
           </p>
         </div>
-      <p>
-        <Link to="/signin">Sign in</Link>
-      </p>
-      <button type="button">
-        <Link to="/signup">Sign up</Link>
-      </button>
-    </>
-  )}
-</div>
+        
+        {/* Conditional rendering based on authentication */}
+        {isAuthenticated && user ? (
+          <div className="user-profile">
+            {/* <p className="user-name">{user.firstName}</p> */}
+            <FaUserCircle size={30} />
+            <button onClick={handleLogout}>Sign out</button>
+          </div>
+        ) : (
+          <>
+            <p>
+              <Link to="/signin">Sign in</Link>
+            </p>
+            <button type="button">
+              <Link to="/signup">Sign up</Link>
+            </button>
+          </>
+        )}
+      </div>
 
       <div className="structuralBC__navbar-menu">
         {toggleMenu ? (
