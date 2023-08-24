@@ -1,6 +1,7 @@
 .structuralBC__header {
     display: flex;
     flex-direction: row;
+    height: 100vh;
 }
 
 .structuralBC__header-content {
