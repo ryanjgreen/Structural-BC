@@ -26,17 +26,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <div className="structuralBC__navbar-links_container">
-          <p>
-            <Link to="/">Home</Link>
-          </p>
-          <p>
-            <Link to="/calculators">Calculators</Link>
-          </p>
-          <p>
-            <Link to="/contact">Contact</Link>
-          </p>
-        </div>
+    
       </div>
 
       <div className="structuralBC__navbar-sign">
@@ -49,6 +39,17 @@ const Navbar = () => {
     </div>
   ) : (
     <>
+     <div className="structuralBC__navbar-links_container">
+          <p>
+            <Link to="/">Home</Link>
+          </p>
+          <p>
+            <Link to="/calculators">Calculators</Link>
+          </p>
+          <p>
+            <Link to="/contact">Contact</Link>
+          </p>
+        </div>
       <p>
         <Link to="/signin">Sign in</Link>
       </p>

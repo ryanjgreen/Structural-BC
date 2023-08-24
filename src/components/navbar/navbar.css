@@ -14,15 +14,13 @@
     align-items: center;
   }
   
-  .structuralBC__navbar-links_logo {
-    margin-right: 31.5rem;
-  }
-  
+ 
 
   
   .structuralBC__navbar-links_container {
     display: flex;
     flex-direction: row;
+   
   }
   
   .structuralBC__navbar-sign {
