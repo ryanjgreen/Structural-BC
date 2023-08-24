@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import "./questions.css";
-import html2pdf from 'html2pdf.js';
-
-
-
-
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const CombinedQuestions = () => {
-
-  
   // State to store the selected option for the first question
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedOption2, setSelectedOption2] = useState("");
@@ -21,40 +16,52 @@ const CombinedQuestions = () => {
   const [userInput3, setUserInput3] = useState("");
   const [numStoreys, setNumStoreys] = useState(0);
   const [storeysData, setStoreysData] = useState(
-    Array(parseInt(numStoreys, 10) || 0).fill().map(() => ({ weight: '', height: '', fx: '' }))
+    Array(parseInt(numStoreys, 10) || 0)
+      .fill()
+      .map(() => ({ weight: "", height: "", fx: "" }))
   );
-  
 
-  const handleSaveAsPDF = () => {
-    // Logic to generate and save the content of WhiteSheet as a PDF
+  const handleSaveAsPDF = async () => {
     const content = document.querySelector('.values'); // Get the content to convert
-  
+
     const opt = {
-      margin: 10,
+      margin: 25,
       filename: 'Specified_Lateral_Earthquake_Force.pdf',
       image: { type: 'jpeg', quality: 1 },
       html2canvas: { scale: 3 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     };
-  
-    // Generate the PDF
-    html2pdf().from(content).set(opt).save();
-  
+
+    // Create a canvas from the content
+    const canvas = await html2canvas(content);
+
+    // Convert canvas to an image
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+    // Create a PDF instance
+    const pdf = new jsPDF(opt.jsPDF);
+
+    // Add the image to the PDF
+    pdf.addImage(imgData, 'JPEG', opt.margin, opt.margin, pdf.internal.pageSize.getWidth() - 2 * opt.margin, pdf.internal.pageSize.getHeight() - 2 * opt.margin);
+
+    // Save the PDF
+    pdf.save(opt.filename);
+
     // Add the "clicked" class to initiate the animation
     const button = document.querySelector('.save-pdf-button');
     button.classList.add('clicked');
-  
+
     // Remove the "clicked" class after a short delay to reset the animation
     setTimeout(() => {
       button.classList.remove('clicked');
     }, 300);
   };
-  
+
 
   const [rd, setRd] = useState(0);
   const [ro, setRo] = useState(0);
   const [mvs, setMvs] = useState(0);
-  const [calculatedValues, setCalculatedValues] = useState(null); 
+  const [calculatedValues, setCalculatedValues] = useState(null);
 
   // Function to handle the option selection for the first question
   const handleOptionChange = (event) => {
@@ -71,9 +78,6 @@ const CombinedQuestions = () => {
     return "";
   };
 
-
-  
-  
   // Function to handle the option selection for the second question
   const handleOptionChange2 = (event) => {
     setSelectedOption2(event.target.value);
@@ -84,40 +88,32 @@ const CombinedQuestions = () => {
     setSelectedOption3(event.target.value);
   };
 
- 
-
   const handleOptionChange4 = (event) => {
     const selectedValue = event.target.value;
     const selectedText = event.target.options[event.target.selectedIndex].text;
     setSelectedOption4({ value: selectedValue, text: selectedText });
   };
 
-
-
   const handleOptionChange5 = (event) => {
     const selectedValue = event.target.value;
     const selectedText = event.target.options[event.target.selectedIndex].text;
     setSelectedOption5({ value: selectedValue, text: selectedText });
   };
-  
-  
-  
-  
 
   const handleOptionChange6 = (event) => {
     setSelectedOption6(event.target.value);
-    const selectedOptionElement = event.target.options[event.target.selectedIndex];
+    const selectedOptionElement =
+      event.target.options[event.target.selectedIndex];
     const newRd = parseFloat(selectedOptionElement.getAttribute("data-rd"));
     const newRo = parseFloat(selectedOptionElement.getAttribute("data-ro"));
     const newmv = parseFloat(selectedOptionElement.getAttribute("data-mv"));
     const selectedOptionText = selectedOptionElement.text; // Get the selected option's text
-  
+
     setRd(newRd);
     setRo(newRo);
     setMvs(newmv);
     setSelectedOption6({ value: event.target.value, text: selectedOptionText }); // Set the selected SFRS option object
   };
-  
 
   // Function to handle the input change for the first question
   const handleInputChange1 = (event) => {
@@ -125,8 +121,8 @@ const CombinedQuestions = () => {
     // Perform the validation check
     if (!isNaN(newValue) && parseFloat(newValue) > 0) {
       setUserInput1(newValue);
-    } else if (newValue === '') {
-      setUserInput1(''); // Clear the input if it becomes empty
+    } else if (newValue === "") {
+      setUserInput1(""); // Clear the input if it becomes empty
     }
   };
 
@@ -137,30 +133,31 @@ const CombinedQuestions = () => {
     // Perform the validation check
     if (!isNaN(newValue) && parseFloat(newValue) > 0) {
       setUserInput2(newValue);
-    } else if (newValue === '') {
-      setUserInput2(''); // Clear the input if it becomes empty
+    } else if (newValue === "") {
+      setUserInput2(""); // Clear the input if it becomes empty
     }
   };
-
 
   // Function to handle the input change for the third question
   const handleInputChange3 = (event) => {
     const value = event.target.value;
     const parsedValue = parseInt(value, 10);
-  
+
     // Allow empty input (clearing the field)
-    if (value === '') {
-      setUserInput3('');
+    if (value === "") {
+      setUserInput3("");
       setNumStoreys(0);
       setStoreysData([]);
     } else if (!isNaN(parsedValue) && parsedValue > 0 && parsedValue <= 20) {
       setUserInput3(value);
       setNumStoreys(parsedValue);
-      setStoreysData(Array(parsedValue).fill().map(() => ({ weight: '', height: '' })));
+      setStoreysData(
+        Array(parsedValue)
+          .fill()
+          .map(() => ({ weight: "", height: "" }))
+      );
     }
   };
-  
-
 
   const handleStoreyInputChange = (index, field, value) => {
     const newStoreysData = [...storeysData];
@@ -170,9 +167,6 @@ const CombinedQuestions = () => {
     };
     setStoreysData(newStoreysData);
   };
-  
-  
-
 
   // Function to handle the combined submit
   const handleSubmitCalculation = () => {
@@ -215,7 +209,6 @@ const CombinedQuestions = () => {
       ro: ro,
       mvs: mvs,
       storeys: storeysData,
-
     };
 
     console.log("Data to send to backend:", requestData); // Add this console log to check the data being sent
@@ -231,8 +224,8 @@ const CombinedQuestions = () => {
       .then((response) => response.json())
       .then((data) => {
         // Process the API response data here
-    
-       setCalculatedValues(data);
+
+        setCalculatedValues(data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -639,19 +632,18 @@ const CombinedQuestions = () => {
         <h2>
           Earthquake Importance Factor (I<sub>E</sub>)
         </h2>
-       
-          <select
-            className="btn"
-            value={selectedOption3}
-            onChange={handleOptionChange3}>
-            <option value="">Select an option</option>
-            <option value="0.8">Low</option>
-            <option value="1.0">Normal</option>
-            <option value="1.3">High</option>
-            <option value="1.5">Post-Disaster</option>
-            {/* Add more options as needed */}
-          </select>
-         
+
+        <select
+          className="btn"
+          value={selectedOption3}
+          onChange={handleOptionChange3}>
+          <option value="">Select an option</option>
+          <option value="0.8">Low</option>
+          <option value="1.0">Normal</option>
+          <option value="1.3">High</option>
+          <option value="1.5">Post-Disaster</option>
+          {/* Add more options as needed */}
+        </select>
 
         {/* Second question - Dropdown */}
         <h2>System</h2>
@@ -684,544 +676,507 @@ const CombinedQuestions = () => {
 
         {/* Third question */}
         <h2>Weight(kN)</h2>
-      
-          <input
-            className="btn"
-            type="text"
-            placeholder="Enter a value"
-            value={userInput2}
-            onChange={handleInputChange2}
-          />
-         
+
+        <input
+          className="btn"
+          type="text"
+          placeholder="Enter a value"
+          value={userInput2}
+          onChange={handleInputChange2}
+        />
 
         <h2>Height(m)</h2>
-      
+
+        <input
+          className="btn"
+          type="text"
+          placeholder="Enter a value"
+          value={userInput1}
+          onChange={handleInputChange1}
+        />
+
+        <div>
+          <h2>SFRS</h2>
+          <select
+            className="btn"
+            value={selectedOption6.value}
+            onChange={handleOptionChange6}>
+            <option value="">Select an option</option>
+
+            {selectedOption5.value === "1" && (
+              <>
+                {selectedOption4.value === "1" && (
+                  <>
+                    <option data-rd="5" data-ro="1.5" data-mv="1" value="1">
+                      Ductile moment-resisting frames
+                    </option>
+                    <option data-rd="3.5" data-ro="1.5" data-mv="1" value="2">
+                      Moderately ductile moment-resisting frames
+                    </option>
+                    <option data-rd="2" data-ro="1.3" data-mv="1" value="3">
+                      Limited ductility moment-resisting frames
+                    </option>
+                    <option data-rd="3.5" data-ro="1.6" data-mv="1" value="4">
+                      Moderately ductile truss moment-resisting frames
+                    </option>
+                    <option data-rd="1.5" data-ro="1.3" data-mv="1" value="5">
+                      Conventional construction of moment-resisting frames,
+                      braced frames or plate walls
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="5" value="6">
+                      Other steel SFRSs not defined above
+                    </option>
+                  </>
+                )}
+
+                {selectedOption4.value === "2" && (
+                  <>
+                    <option data-rd="3" data-ro="1.3" data-mv="3" value="1">
+                      Moderately ductile concentrically braced frames
+                    </option>
+                    <option data-rd="2" data-ro="1.3" data-mv="3" value="2">
+                      Limited ductility concentrically braced frames
+                    </option>
+                    <option data-rd="4" data-ro="1.2" data-mv="3" value="3">
+                      Ductile buckling-restrained braced frames
+                    </option>
+                    <option data-rd="4" data-ro="1.5" data-mv="3" value="4">
+                      Ductile eccentrically braced frames
+                    </option>
+                    <option data-rd="1.5" data-ro="1.3" data-mv="3" value="5">
+                      Conventional construction of moment-resisting frames,
+                      braced frames or plate walls
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="5" value="6">
+                      Other steel SFRSs not defined above
+                    </option>
+                  </>
+                )}
+
+                {selectedOption4.value === "3" && (
+                  <>
+                    <option data-rd="5" data-ro="1.6" data-mv="4" value="1">
+                      Ductile plate walls
+                    </option>
+                    <option data-rd="3.5" data-ro="1.3" data-mv="4" value="2">
+                      Moderately ductile plate walls
+                    </option>
+                    <option data-rd="2" data-ro="1.3" data-mv="4" value="3">
+                      Limited ductility plate walls
+                    </option>
+                    <option data-rd="1.5" data-ro="1.3" data-mv="4" value="4">
+                      Conventional construction of moment-resisting frames,
+                      braced frames or plate walls
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="5" value="5">
+                      Other steel SFRSs not defined above
+                    </option>
+                  </>
+                )}
+              </>
+            )}
+
+            {selectedOption5.value === "2" && (
+              <>
+                {selectedOption4.value === "1" && (
+                  <>
+                    <option data-rd="4" data-ro="1.7" data-mv="1" value="1">
+                      Ductile moment-resisting frames
+                    </option>
+                    <option data-rd="2.5" data-ro="1.4" data-mv="1" value="2">
+                      Moderately ductile moment-resisting frames
+                    </option>
+                    <option data-rd="1.5" data-ro="1.3" data-mv="1" value="3">
+                      Conventional construction (Moment-resisting frames, Shear
+                      walls, Two way slabs without beams)
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="5" value="4">
+                      Other concrete SFRSs not listed above
+                    </option>
+                  </>
+                )}
+
+                {selectedOption4.value === "3" && (
+                  <>
+                    <option data-rd="4" data-ro="1.7" data-mv="2" value="1">
+                      Ductile coupled walls
+                    </option>
+                    <option data-rd="2.5" data-ro="1.4" data-mv="2" value="2">
+                      Moderately ductile coupled walls
+                    </option>
+                    <option data-rd="3.5" data-ro="1.7" data-mv="2" value="3">
+                      Ductile partially coupled walls
+                    </option>
+                    <option data-rd="2" data-ro="1.4" data-mv="2" value="4">
+                      Moderately ductile partially coupled walls
+                    </option>
+                    <option data-rd="3.5" data-ro="1.6" data-mv="4" value="5">
+                      Ductile shear walls
+                    </option>
+                    <option data-rd="2" data-ro="1.4" data-mv="4" value="6">
+                      Moderately ductile shear walls
+                    </option>
+                    <option data-rd="1.5" data-ro="1.3" data-mv="4" value="7">
+                      Conventional construction (Moment-resisting frames, Shear
+                      walls, Two way slabs without beams)
+                    </option>
+                    <option data-rd="2" data-ro="1.3" data-mv="4" value="8">
+                      Tilt up construction (Moderately ductile walls and frames)
+                    </option>
+                    <option data-rd="1.5" data-ro="1.3" data-mv="4" value="9">
+                      Tilt up construction (Limited ductility walls and frames)
+                    </option>
+                    <option data-rd="1.3" data-ro="1.3" data-mv="4" value="10">
+                      Tilt up construction (Conventional walls and frames)
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="4" value="11">
+                      Other concrete SFRSs not listed above
+                    </option>
+                  </>
+                )}
+              </>
+            )}
+
+            {selectedOption5.value === "3" && (
+              <>
+                {selectedOption4.value === "1" && (
+                  <>
+                    <option data-rd="2" data-ro="1.5" data-mv="4" value="1">
+                      Braced or moment-resisting frames with ductile connections
+                      (Moderately ductile)
+                    </option>
+                    <option data-rd="1.5" data-ro="1.5" data-mv="4" value="2">
+                      Braced or moment-resisting frames with ductile connections
+                      (Limited ductility)
+                    </option>
+                  </>
+                )}
+
+                {selectedOption4.value === "2" && (
+                  <>
+                    <option data-rd="2" data-ro="1.5" data-mv="4" value="1">
+                      Braced or moment-resisting frames with ductile connections
+                      (Moderately ductile)
+                    </option>
+                    <option data-rd="1.5" data-ro="1.5" data-mv="4" value="2">
+                      Braced or moment-resisting frames with ductile connections
+                      (Limited ductility)
+                    </option>
+                  </>
+                )}
+
+                {selectedOption4.value === "3" && (
+                  <>
+                    <option data-rd="3" data-ro="1.7" data-mv="4" value="1">
+                      Shear walls(Nailed shear walls:wood-based panel)
+                    </option>
+                    <option data-rd="3" data-ro="1.7" data-mv="4" value="2">
+                      Shear walls(wood-based and gypsum panels in combination)
+                    </option>
+                    <option data-rd="2" data-ro="1.5" data-mv="4" value="3">
+                      Moderately ductile cross-laminated timber shear walls:
+                      platform-type construction
+                    </option>
+                    <option data-rd="1" data-ro="1.3" data-mv="4" value="4">
+                      Limited ductility cross-laminated timber shear walls:
+                      platform-type construction
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="5" value="5">
+                      Other wood- or gypsum-based SFRSs not listed above
+                    </option>
+                  </>
+                )}
+              </>
+            )}
+
+            {selectedOption5.value === "4" && (
+              <>
+                {selectedOption4.value === "1" && (
+                  <>
+                    <option data-rd="2" data-ro="1.5" data-mv="4" value="1">
+                      Conventional construction (Shear walls, Moment-resisting
+                      frames)
+                    </option>
+                  </>
+                )}
+
+                {selectedOption4.value === "3" && (
+                  <>
+                    <option data-rd="3" data-ro="1.5" data-mv="4" value="1">
+                      Ductile shear walls
+                    </option>
+                    <option data-rd="2" data-ro="1.5" data-mv="4" value="2">
+                      Moderately ductile shear walls
+                    </option>
+                  </>
+                )}
+
+                <option data-rd="1" data-ro="1" data-mv="5" value="4">
+                  Unreinforced masonry
+                </option>
+                <option data-rd="1" data-ro="1" data-mv="5" value="5">
+                  Other masonry SFRSs not listed above
+                </option>
+              </>
+            )}
+
+            {selectedOption5.value === "5" && (
+              <>
+                {selectedOption4.value === "3" && (
+                  <>
+                    <option data-rd="2.5" data-ro="1.7" data-mv="4" value="1">
+                      Shear walls (Screw-connected shear walls – wood-based
+                      panels)
+                    </option>
+                    <option data-rd="1.5" data-ro="1.7" data-mv="4" value="2">
+                      Shear walls (Screw-connected shear walls – wood-based and
+                      gypsum panels in combination)
+                    </option>
+                    <option data-rd="1.9" data-ro="1.3" data-mv="3" value="3">
+                      Diagonal strap concentrically braced walls (Limited
+                      ductility)
+                    </option>
+                    <option data-rd="1.2" data-ro="1.3" data-mv="3" value="4">
+                      Diagonal strap concentrically braced walls (Conventional
+                      construction)
+                    </option>
+                    <option data-rd="1" data-ro="1" data-mv="5" value="5">
+                      Other cold-formed SFRSs not defined above
+                    </option>
+                  </>
+                )}
+              </>
+            )}
+          </select>
+
+          <h2>Total Number of Storeys</h2>
+
           <input
             className="btn"
             type="text"
             placeholder="Enter a value"
-            value={userInput1}
-            onChange={handleInputChange1}
+            value={userInput3}
+            onChange={handleInputChange3}
           />
-         
-
-       
-
-
-         <div>
-
-        <h2>SFRS</h2>
-        <select
-          className="btn"
-          value={selectedOption6.value}
-          onChange={handleOptionChange6}>
-          <option value="">Select an option</option>
-
-          {selectedOption5.value === "1" && (
-            <>
-              {selectedOption4.value === "1" && (
-                <>
-                  <option data-rd="5" data-ro="1.5" data-mv="1" value="1">
-                    Ductile moment-resisting frames
-                  </option>
-                  <option data-rd="3.5" data-ro="1.5" data-mv="1" value="2">
-                    Moderately ductile moment-resisting frames
-                  </option>
-                  <option data-rd="2" data-ro="1.3" data-mv="1" value="3">
-                    Limited ductility moment-resisting frames
-                  </option>
-                  <option data-rd="3.5" data-ro="1.6" data-mv="1" value="4">
-                    Moderately ductile truss moment-resisting frames
-                  </option>
-                  <option data-rd="1.5" data-ro="1.3" data-mv="1" value="5">
-                    Conventional construction of moment-resisting frames, braced
-                    frames or plate walls
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="5" value="6">
-                    Other steel SFRSs not defined above
-                  </option>
-                </>
-              )}
-
-              {selectedOption4.value === "2" && (
-                <>
-                  <option data-rd="3" data-ro="1.3" data-mv="3" value="1">
-                    Moderately ductile concentrically braced frames
-                  </option>
-                  <option data-rd="2" data-ro="1.3" data-mv="3" value="2">
-                    Limited ductility concentrically braced frames
-                  </option>
-                  <option data-rd="4" data-ro="1.2" data-mv="3" value="3">
-                    Ductile buckling-restrained braced frames
-                  </option>
-                  <option data-rd="4" data-ro="1.5" data-mv="3" value="4">
-                    Ductile eccentrically braced frames
-                  </option>
-                  <option data-rd="1.5" data-ro="1.3" data-mv="3" value="5">
-                    Conventional construction of moment-resisting frames, braced
-                    frames or plate walls
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="5" value="6">
-                    Other steel SFRSs not defined above
-                  </option>
-                </>
-              )}
-
-              {selectedOption4.value === "3" && (
-                <>
-                  <option data-rd="5" data-ro="1.6" data-mv="4" value="1">
-                    Ductile plate walls
-                  </option>
-                  <option data-rd="3.5" data-ro="1.3" data-mv="4" value="2">
-                    Moderately ductile plate walls
-                  </option>
-                  <option data-rd="2" data-ro="1.3" data-mv="4" value="3">
-                    Limited ductility plate walls
-                  </option>
-                  <option data-rd="1.5" data-ro="1.3" data-mv="4" value="4">
-                    Conventional construction of moment-resisting frames, braced
-                    frames or plate walls
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="5" value="5">
-                    Other steel SFRSs not defined above
-                  </option>
-                </>
-              )}
-            </>
-          )}
-
-          {selectedOption5.value === "2" && (
-            <>
-              {selectedOption4.value === "1" && (
-                <>
-                  <option data-rd="4" data-ro="1.7" data-mv="1" value="1">
-                    Ductile moment-resisting frames
-                  </option>
-                  <option data-rd="2.5" data-ro="1.4" data-mv="1" value="2">
-                    Moderately ductile moment-resisting frames
-                  </option>
-                  <option data-rd="1.5" data-ro="1.3" data-mv="1" value="3">
-                    Conventional construction (Moment-resisting frames, Shear
-                    walls, Two way slabs without beams)
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="5" value="4">
-                    Other concrete SFRSs not listed above
-                  </option>
-                </>
-              )}
-
-              {selectedOption4.value === "3" && (
-                <>
-                  <option data-rd="4" data-ro="1.7" data-mv="2" value="1">
-                    Ductile coupled walls
-                  </option>
-                  <option data-rd="2.5" data-ro="1.4" data-mv="2" value="2">
-                    Moderately ductile coupled walls
-                  </option>
-                  <option data-rd="3.5" data-ro="1.7" data-mv="2" value="3">
-                    Ductile partially coupled walls
-                  </option>
-                  <option data-rd="2" data-ro="1.4" data-mv="2" value="4">
-                    Moderately ductile partially coupled walls
-                  </option>
-                  <option data-rd="3.5" data-ro="1.6" data-mv="4" value="5">
-                    Ductile shear walls
-                  </option>
-                  <option data-rd="2" data-ro="1.4" data-mv="4" value="6">
-                    Moderately ductile shear walls
-                  </option>
-                  <option data-rd="1.5" data-ro="1.3" data-mv="4" value="7">
-                    Conventional construction (Moment-resisting frames, Shear
-                    walls, Two way slabs without beams)
-                  </option>
-                  <option data-rd="2" data-ro="1.3" data-mv="4" value="8">
-                    Tilt up construction (Moderately ductile walls and frames)
-                  </option>
-                  <option data-rd="1.5" data-ro="1.3" data-mv="4" value="9">
-                    Tilt up construction (Limited ductility walls and frames)
-                  </option>
-                  <option data-rd="1.3" data-ro="1.3" data-mv="4" value="10">
-                    Tilt up construction (Conventional walls and frames)
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="4" value="11">
-                    Other concrete SFRSs not listed above
-                  </option>
-                </>
-              )}
-            </>
-          )}
-
-          {selectedOption5.value === "3" && (
-            <>
-              {selectedOption4.value === "1" && (
-                <>
-                  <option data-rd="2" data-ro="1.5" data-mv="4" value="1">
-                    Braced or moment-resisting frames with ductile connections
-                    (Moderately ductile)
-                  </option>
-                  <option data-rd="1.5" data-ro="1.5" data-mv="4" value="2">
-                    Braced or moment-resisting frames with ductile connections
-                    (Limited ductility)
-                  </option>
-                </>
-              )}
-
-              {selectedOption4.value === "2" && (
-                <>
-                  <option data-rd="2" data-ro="1.5" data-mv="4" value="1">
-                    Braced or moment-resisting frames with ductile connections
-                    (Moderately ductile)
-                  </option>
-                  <option data-rd="1.5" data-ro="1.5" data-mv="4" value="2">
-                    Braced or moment-resisting frames with ductile connections
-                    (Limited ductility)
-                  </option>
-                </>
-              )}
-
-              {selectedOption4.value === "3" && (
-                <>
-                  <option data-rd="3" data-ro="1.7" data-mv="4" value="1">
-                    Shear walls(Nailed shear walls:wood-based panel)
-                  </option>
-                  <option data-rd="3" data-ro="1.7" data-mv="4" value="2">
-                    Shear walls(wood-based and gypsum panels in combination)
-                  </option>
-                  <option data-rd="2" data-ro="1.5" data-mv="4" value="3">
-                    Moderately ductile cross-laminated timber shear walls:
-                    platform-type construction
-                  </option>
-                  <option data-rd="1" data-ro="1.3" data-mv="4" value="4">
-                    Limited ductility cross-laminated timber shear walls:
-                    platform-type construction
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="5" value="5">
-                    Other wood- or gypsum-based SFRSs not listed above
-                  </option>
-                </>
-              )}
-            </>
-          )}
-
-          {selectedOption5.value === "4" && (
-            <>
-              {selectedOption4.value === "1" && (
-                <>
-                  <option data-rd="2" data-ro="1.5" data-mv="4" value="1">
-                    Conventional construction (Shear walls, Moment-resisting
-                    frames)
-                  </option>
-                </>
-              )}
-
-              {selectedOption4.value === "3" && (
-                <>
-                  <option data-rd="3" data-ro="1.5" data-mv="4" value="1">
-                    Ductile shear walls
-                  </option>
-                  <option data-rd="2" data-ro="1.5" data-mv="4" value="2">
-                    Moderately ductile shear walls
-                  </option>
-                </>
-              )}
-
-              <option data-rd="1" data-ro="1" data-mv="5" value="4">
-                Unreinforced masonry
-              </option>
-              <option data-rd="1" data-ro="1" data-mv="5" value="5">
-                Other masonry SFRSs not listed above
-              </option>
-            </>
-          )}
-
-          {selectedOption5.value === "5" && (
-            <>
-              {selectedOption4.value === "3" && (
-                <>
-                  <option data-rd="2.5" data-ro="1.7" data-mv="4" value="1">
-                    Shear walls (Screw-connected shear walls – wood-based
-                    panels)
-                  </option>
-                  <option data-rd="1.5" data-ro="1.7" data-mv="4" value="2">
-                    Shear walls (Screw-connected shear walls – wood-based and
-                    gypsum panels in combination)
-                  </option>
-                  <option data-rd="1.9" data-ro="1.3" data-mv="3" value="3">
-                    Diagonal strap concentrically braced walls (Limited
-                    ductility)
-                  </option>
-                  <option data-rd="1.2" data-ro="1.3" data-mv="3" value="4">
-                    Diagonal strap concentrically braced walls (Conventional
-                    construction)
-                  </option>
-                  <option data-rd="1" data-ro="1" data-mv="5" value="5">
-                    Other cold-formed SFRSs not defined above
-                  </option>
-                </>
-              )}
-            </>
-          )}
-        </select>
-
-       
-
-
-        <h2>Total Number of Storeys</h2>
-       
-       <input
-         className="btn"
-         type="text"
-         placeholder="Enter a value"
-         value={userInput3}
-         onChange={handleInputChange3}
-       />
-
-</div>
-{numStoreys > 0 && (
-        <div>
-          {storeysData.map((storey, index) => (
-            <div key={index}>
-              <h2>Story {index + 1}</h2>
-              <div>
-                <input
-                  type="text"
-                  className="btn"
-                  placeholder={`Weight of Story ${index + 1} (kN)`}
-                  value={storeysData[index].weight}
-                  onChange={(event) => handleStoreyInputChange(index, 'weight', event.target.value)}
-                />
+        </div>
+        {numStoreys > 0 && (
+          <div>
+            {storeysData.map((storey, index) => (
+              <div key={index}>
+                <h2>Story {index + 1}</h2>
+                <div>
+                  <input
+                    type="text"
+                    className="btn"
+                    placeholder={`Weight of Story ${index + 1} (kN)`}
+                    value={storeysData[index].weight}
+                    onChange={(event) =>
+                      handleStoreyInputChange(
+                        index,
+                        "weight",
+                        event.target.value
+                      )
+                    }
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    className="btn"
+                    placeholder={`Height of Story ${index + 1} (m)`}
+                    value={storeysData[index].height}
+                    onChange={(event) =>
+                      handleStoreyInputChange(
+                        index,
+                        "height",
+                        event.target.value
+                      )
+                    }
+                  />
+                </div>
               </div>
-              <div>
-                <input
-                  type="text"
-                  className="btn"
-                  placeholder={`Height of Story ${index + 1} (m)`}
-                  value={storeysData[index].height}
-                  onChange={(event) => handleStoreyInputChange(index, 'height', event.target.value)}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-
-
-           <button className="btn2" onClick={handleSubmitCalculation}>
-            Calculate
-          </button> 
-
-      
-
-      </div>
-
-<div>
-      <div className="pdfsave"> 
-      <button className="save-pdf-button" onClick={handleSaveAsPDF}>
-          Save as PDF
-        </button>
-        </div>
-      
-      
-      <div className="values">
-
-     
-
-      
-        
-      {calculatedValues && (
-        <>
-        <h2>Location</h2>
-
-        <div className="seismic">
-
-         <p>{getSelectedCityText()}, British Columbia</p>
-
-         <p>Latitude: {calculatedValues.latitude}</p>
-
-         <p>Longitude: {calculatedValues.longitude}</p>
-
-
-         </div>
-           
-        <h2>Seismic Values</h2>
-
-        <div className="seismic">
-
-        <p>Probability of exceedance in 50 years = 2%</p>
-
-        <p>Site Class: {calculatedValues.site_class}</p>
-
-        </div>
-
-        <div className="seismic">
-        
-        <div>
-
-          <p>Sa(0.2) = {calculatedValues.sa02}</p>
-          <p>Sa(0.5) = {calculatedValues.sa05}</p>
-          <p>Sa(1.0) = {calculatedValues.sa1}</p>
-
-        </div>
-
-
-        <div>
-          <p>Sa(2.0) = {calculatedValues.sa2}</p>
-          <p>Sa(5.0) = {calculatedValues.sa5}</p>
-          <p>Sa(10.0) = {calculatedValues.sa10}</p>
-         </div>
-
-         </div>
-
-
-         <h2>Input Values</h2>
-
-         <p>Importance Factor, Ie = {calculatedValues.Ie}</p>
-
-         <div className="seismic">
-
-         <p>Selected System: {selectedOption4.text}</p>
-
-         <p>Selected Material: {selectedOption5.text}</p>
-
-
-         </div>
-
-
-         <div className="seismic">
-
-         <p>Weight, W = {calculatedValues.w} kN</p>
-
-         <p>Height, h<sub>n</sub> = {calculatedValues.hn} m</p>
-
-         <p>N = {calculatedValues.n}</p>
-         </div>
-
-         <p>SFRS: {selectedOption6.text}</p>
-
-
-
-         <h2>Calculated Values</h2>
-
-
-        <div className="seismic">
-
-         <p>ta = {calculatedValues.ta}s</p>
-
-         <p>sa({calculatedValues.ta}) = {calculatedValues.sata}</p>
-
-         <p>R<sub>d</sub> = {calculatedValues.Rd}</p>
-
-         <p>R<sub>o</sub> = {calculatedValues.Ro}</p>
-
-         <p>mv = {calculatedValues.mv}</p>
-
-
-         </div>
-
-
-         <p>V = S(T<sub>a</sub>)M<sub>v</sub>I<sub>E</sub>W/(R<sub>d</sub>R<sub>o</sub>) = {calculatedValues.v} kN</p>
-
-          {calculatedValues.count === 1 &&(
-            <>
-
-            <p>V<sub>min</sub> = S(4.0)M<sub>v</sub>I<sub>E</sub>W/(R<sub>d</sub>R<sub>o</sub>) = {calculatedValues.vmin}kN</p>
-
-            </>
-
-          )}
-
-          {calculatedValues.count === 2 &&(
-            <>
-
-            <p>V<sub>min</sub> = S(2.0)M<sub>v</sub>I<sub>E</sub>W/(R<sub>d</sub>R<sub>o</sub>) = {calculatedValues.vmin} kN</p>
-
-            </>
-
-          )}
-
-
-          <p>V<sub>max</sub> = MAX (2/3)S(0.2)I<sub>E</sub>W/(R<sub>d</sub>R<sub>o</sub>) or S(0.5)I<sub>E</sub>W/(R<sub>d</sub>R<sub>o</sub>) = {calculatedValues.vmax} kN</p>
-
-          
-          {calculatedValues.check === 1 &&(
-            <>
-
-            <p>V &gt; V<sub>max</sub> and R<sub>d</sub> ≥ 1.5</p>
-
-            <h2>V<sub>design</sub> = {calculatedValues.vmax} kN</h2>
-
-
-            </>
-          )}
-
-
-          {calculatedValues.check ===2 &&(
-            <>
-
-            <p>V<sub>min</sub> &gt; V &gt; V<sub>max</sub> </p>
-
-
-            <h2>V<sub>design</sub> = {calculatedValues.v} kN</h2>
-
-
-
-            </>
-          )
-          }
-
-
-
-          
-            {calculatedValues.check ===3 &&(
-            <>
-
-            <p>V &gt; V<sub>min</sub> but R<sub>d</sub> &lt; 1.5 </p>
-
-            <h2>V<sub>design</sub> = {calculatedValues.v} kN</h2>
-
-            </>
-          )
-          }
-
-
-
-
-
-          
-<div>
-  {(() => {
-    const elements = [];
-    let index = 0;
-    for (const storey of calculatedValues.storeys) {
-      elements.push(
-          <div key={index}>
-          <h2>Story {index + 1}</h2>
-          <p>Weight: {storey.weight} kN</p>
-          <p>Height: {storey.height} m</p>
-          <p>F<sub>x</sub> = {storey.fx} kN</p>
-        </div>
-     
-
-      );
-      index++;
-    }
-    return elements;
-  })()}
-</div>
-
-
-
-
-
-
-          
-      
-
-        </>
+            ))}
+          </div>
         )}
+
+        <button className="btn2" onClick={handleSubmitCalculation}>
+          Calculate
+        </button>
       </div>
-    </div>
+
+      <div>
+        <div className="pdfsave">
+          <button className="save-pdf-button" onClick={handleSaveAsPDF}>
+            Save as PDF
+          </button>
+        </div>
+
+        <div className="values">
+          {calculatedValues && (
+            <>
+              <h2>Location</h2>
+
+              <div className="seismic">
+                <p>{getSelectedCityText()}, British Columbia</p>
+
+                <p>Latitude: {calculatedValues.latitude}</p>
+
+                <p>Longitude: {calculatedValues.longitude}</p>
+              </div>
+
+              <h2>Seismic Values</h2>
+
+              <div className="seismic">
+                <p>Probability of exceedance in 50 years = 2%</p>
+
+                <p>Site Class: {calculatedValues.site_class}</p>
+              </div>
+
+              <div className="seismic">
+                <div>
+                  <p>Sa(0.2) = {calculatedValues.sa02}</p>
+                  <p>Sa(0.5) = {calculatedValues.sa05}</p>
+                  <p>Sa(1.0) = {calculatedValues.sa1}</p>
+                </div>
+
+                <div>
+                  <p>Sa(2.0) = {calculatedValues.sa2}</p>
+                  <p>Sa(5.0) = {calculatedValues.sa5}</p>
+                  <p>Sa(10.0) = {calculatedValues.sa10}</p>
+                </div>
+              </div>
+
+              <h2>Input Values</h2>
+
+              <p>Importance Factor, Ie = {calculatedValues.Ie}</p>
+
+              <div className="seismic">
+                <p>Selected System: {selectedOption4.text}</p>
+
+                <p>Selected Material: {selectedOption5.text}</p>
+              </div>
+
+              <div className="seismic">
+                <p>Weight, W = {calculatedValues.w} kN</p>
+
+                <p>
+                  Height, h<sub>n</sub> = {calculatedValues.hn} m
+                </p>
+
+                <p>N = {calculatedValues.n}</p>
+              </div>
+
+              <p>SFRS: {selectedOption6.text}</p>
+
+              <h2>Calculated Values</h2>
+
+              <div className="seismic">
+                <p>ta = {calculatedValues.ta}s</p>
+
+                <p>
+                  sa({calculatedValues.ta}) = {calculatedValues.sata}
+                </p>
+
+                <p>
+                  R<sub>d</sub> = {calculatedValues.Rd}
+                </p>
+
+                <p>
+                  R<sub>o</sub> = {calculatedValues.Ro}
+                </p>
+
+                <p>mv = {calculatedValues.mv}</p>
+              </div>
+
+              <p>
+                V = S(T<sub>a</sub>)M<sub>v</sub>I<sub>E</sub>W/(R<sub>d</sub>R
+                <sub>o</sub>) = {calculatedValues.v} kN
+              </p>
+
+              {calculatedValues.count === 1 && (
+                <>
+                  <p>
+                    V<sub>min</sub> = S(4.0)M<sub>v</sub>I<sub>E</sub>W/(R
+                    <sub>d</sub>R<sub>o</sub>) = {calculatedValues.vmin}kN
+                  </p>
+                </>
+              )}
+
+              {calculatedValues.count === 2 && (
+                <>
+                  <p>
+                    V<sub>min</sub> = S(2.0)M<sub>v</sub>I<sub>E</sub>W/(R
+                    <sub>d</sub>R<sub>o</sub>) = {calculatedValues.vmin} kN
+                  </p>
+                </>
+              )}
+
+              <p>
+                V<sub>max</sub> = MAX (2/3)S(0.2)I<sub>E</sub>W/(R<sub>d</sub>R
+                <sub>o</sub>) or S(0.5)I<sub>E</sub>W/(R<sub>d</sub>R
+                <sub>o</sub>) = {calculatedValues.vmax} kN
+              </p>
+
+              {calculatedValues.check === 1 && (
+                <>
+                  <p>
+                    V &gt; V<sub>max</sub> and R<sub>d</sub> ≥ 1.5
+                  </p>
+
+                  <h2>
+                    V<sub>design</sub> = {calculatedValues.vmax} kN
+                  </h2>
+                </>
+              )}
+
+              {calculatedValues.check === 2 && (
+                <>
+                  <p>
+                    V<sub>min</sub> &gt; V &gt; V<sub>max</sub>{" "}
+                  </p>
+
+                  <h2>
+                    V<sub>design</sub> = {calculatedValues.v} kN
+                  </h2>
+                </>
+              )}
+
+              {calculatedValues.check === 3 && (
+                <>
+                  <p>
+                    V &gt; V<sub>min</sub> but R<sub>d</sub> &lt; 1.5{" "}
+                  </p>
+
+                  <h2>
+                    V<sub>design</sub> = {calculatedValues.v} kN
+                  </h2>
+                </>
+              )}
+
+              <div>
+                {(() => {
+                  const elements = [];
+                  let index = 0;
+                  for (const storey of calculatedValues.storeys) {
+                    elements.push(
+                      <div key={index}>
+                        <h2>Story {index + 1}</h2>
+                        <p>Weight: {storey.weight} kN</p>
+                        <p>Height: {storey.height} m</p>
+                        <p>
+                          F<sub>x</sub> = {storey.fx} kN
+                        </p>
+                      </div>
+                    );
+                    index++;
+                  }
+                  return elements;
+                })()}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

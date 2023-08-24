@@ -10,7 +10,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 export default function SignIn() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { login, isAuthenticated } = useAuth();
-    const [loginSuccess, setLoginSuccess] = useState(false);
+    const [setLoginSuccess] = useState(false);
 
     const onSubmit = async (data) => {
         try {
