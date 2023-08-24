@@ -27,7 +27,7 @@
     
     font-family: var(--font-family);
     font-weight: 600;
-    font-size: 1.87vw;
+    font-size: 24px;
     line-height: 49px;
     letter-spacing: -0.02em;
     margin-right: 15.8rem;
@@ -37,7 +37,7 @@
 .signin-container span {
     font-family: var(--font-family);
     color: #565656;
-    font-size: 1.1vw;
+    font-size: 14px;
     margin-right: 7rem;
 }
 
@@ -47,14 +47,14 @@
   border: 1px solid #e9ecef;
   padding: 0.9em 1em;
   outline: none;
-  width: 25.5vw;
+  width: 325px;
   margin-top: 1rem;
  /* Apply the same font-family */
 }
 
 .email2,
 .password {
-  height: 6vh;
+  height: 40px;
 }
 
 .signin-btn {
@@ -72,7 +72,7 @@
     border-radius: 5px;
     margin-top: 2rem;
     margin-bottom: 2rem;
-    width: 25.5vw;
+    width: 325px;
 
  
   
