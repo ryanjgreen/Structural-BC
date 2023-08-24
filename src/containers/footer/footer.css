@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: left;
     background: var(--color-footer);
-    width: 1263px;
+    width: 100vw;
     padding: 2rem 6rem;
   
 }
