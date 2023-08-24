@@ -1,0 +1,98 @@
+.Calculator-heading {
+    background-color: rgb(224, 224, 224);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    
+  }
+  
+  .Calculator-title {
+    flex: 1; /* Expand to fill available space */
+  }
+  
+  .Calculator-title h2 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 49px;
+    letter-spacing: -0.02em;
+  }
+  
+  .Calculator-logo {
+    margin-left: 15rem;
+    margin-bottom: 5rem; /* Adjust the value according to your preference */
+  }
+  
+.Code {
+
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: left; /* Change 'flex-start' to 'center' */
+    flex-direction: column;
+}
+ .Code h3 {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 35px;
+    color: var(--color-text);
+    text-align: left;
+    
+ } 
+
+ .Code p {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--color-text);
+    text-align: left;
+
+ }
+
+ .code-title {
+
+    display: flex;
+    flex-direction: column;
+ }
+
+
+ .align {
+  display: flex;
+  flex-direction: row;
+
+ }
+
+ .WhiteSheet {
+  background-color: white;
+  width: 100%; /* Adjust the width as needed */
+  display: flex;
+  flex-direction: column;; /* Adjust the height as needed */
+  margin-top: 20px; /* Adjust the top margin as needed for spacing */
+  padding: 20px; /* Adjust the padding as needed for inner content spacing */
+}
+
+
+
+.Sitedata h3,
+.Structure-data h3{
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 17px;
+  line-height: 35px;
+  color: black;
+  text-align: left;
+  margin-left: 5rem;
+  margin-top: 2rem;
+}
+
+
+.pdf {
+
+  display: flex;
+}
+

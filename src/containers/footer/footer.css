@@ -1,0 +1,40 @@
+.structuralBC__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    background: var(--color-footer);
+    width: 1263px;
+    padding: 2rem 6rem;
+  
+}
+
+
+.structuralBC__about h3,
+.structuralBC__software h3 {
+    font-size: 17.5px;
+    line-height: 25.5px;
+    font-family: var(--font-family);
+    color: #000000;
+    text-align: left;
+    margin-right: 70px;
+   
+
+  }
+.structuralBC__about-about-us p,
+.structuralBC__about-team p,
+.structuralBC__about-contact p,
+.structuralBC__software-lateral p {
+
+    color: #000000;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 28px;
+    text-transform: capitalize;
+   
+    cursor: pointer;
+
+}
+
+
+    

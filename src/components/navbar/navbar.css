@@ -1,0 +1,153 @@
+.structuralBC__navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .25rem 5rem;
+    background-color: rgb(255, 255, 255);
+    width: 1263px;
+  }
+  
+  .structuralBC__navbar-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .structuralBC__navbar-links_logo {
+    margin-right: 31.5rem;
+  }
+  
+
+  
+  .structuralBC__navbar-links_container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .structuralBC__navbar-sign {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+.structuralBC__navbar-links_container p,
+.structuralBC__navbar-sign p,
+.structuralBC__navbar-menu-container p {
+
+    color: #000000;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    text-transform: capitalize;
+
+    margin: 0 1rem;
+    cursor: pointer;
+  }
+  
+
+.structuralBC__navbar-sign button,
+.structuralBC__navbar-menu_container button {
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background: #3e3e3e;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.structuralBC__navbar-menu {
+    margin-left: 1rem;
+
+    display: none;
+    position: relative;
+}
+
+.structuralBC__navbar-menu svg {
+    cursor: pointer;
+}
+
+.structuralBC__navbar-menu_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    
+    text-align: end;
+    background: var(--color-footer);
+    padding: 2rem;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    margin-top: 1rem;
+    min-width: 210px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0,0, 0,0.2);
+}
+
+.structuralBC__navbar-menu_container p {
+    margin: 1rem 0;
+}
+
+.structuralBC__navbar-menu_container-links-sign {
+    display: none;
+}
+
+/* Add this to your CSS file (navbar.css) */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 0rem;
+
+  }
+  
+  
+  .user-profile button {
+    margin-left: 1rem; /* Add some margin to separate the user name and logout button */
+  }
+
+
+  
+
+@media screen and (max-width: 1050px) {
+    .structuralBC__navbar-links_container {
+        display: none;
+    }
+
+    .structuralBC__navbar-menu {
+        display: flex;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .structuralBC__navbar {
+        padding: 2rem 4rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .structuralBC__navbar {
+        padding: 2rem;
+    }
+
+    .structuralBC__navbar-sign {
+        display: none;
+    }
+
+    .structuralBC__navbar-menu_container {
+        top: 20px;
+    }
+
+    .structuralBC__navbar-menu_container-links-sign {
+        display: block;
+    }
+}
+
+
+

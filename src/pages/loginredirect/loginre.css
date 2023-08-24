@@ -1,0 +1,52 @@
+.loginre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("../../assets/login.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.content {
+    background-color: rgba(255, 255, 255,1);
+    padding: 50px;
+    border-radius: 10px;
+ 
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+}
+
+.content h1 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 49px;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.content p {
+    font-family: var(--font-family);
+    color: #565656;
+    font-size: 14px;
+   
+}
+
+.content a {
+    color: rgb(63, 63, 206);
+    text-decoration: none;
+}
+
+.content a:hover {
+    text-decoration: underline;
+}
+
+.logo-struct2 {
+    margin-bottom: 1rem;
+    
+}

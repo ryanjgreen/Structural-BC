@@ -1,0 +1,151 @@
+
+.main-signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("../../assets/sunset.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.signin-container {
+    background-color: rgba(255, 255, 255,1);
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: center;
+}
+
+.signin-container h1 {
+
+    
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 49px;
+    letter-spacing: -0.02em;
+    margin-right: 15.8rem;
+}
+
+
+.signin-container span {
+    font-family: var(--font-family);
+    color: #565656;
+    font-size: 14px;
+    margin-right: 7rem;
+}
+
+.email2,
+.password {
+  /* Common styling for email, name, and message */
+  border: 1px solid #e9ecef;
+  padding: 0.9em 1em;
+  outline: none;
+  width: 325px;
+  margin-top: 1rem;
+ /* Apply the same font-family */
+}
+
+.email2,
+.password {
+  height: 40px;
+}
+
+.signin-btn {
+
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background: #3e3e3e;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 325px;
+
+ 
+  
+   }
+
+   .success-message h2 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 49px;
+    letter-spacing: -0.02em;
+    margin-top: 1rem;
+
+
+
+   }
+
+
+
+   .success-message button {
+
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background: #3e3e3e;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    width: 200px;
+   }
+
+   /* signin.css */
+
+.logo-struct {
+
+    margin-right: 9.85rem;
+    margin-top: 2rem;
+}
+
+
+
+.create-account-link p {
+
+    font-family: var(--font-family);
+    color: #000000;
+    font-size: 12px;
+    margin-right: 11.7rem;
+    margin-top: 1rem;
+
+}
+
+
+.create-account-link-text {
+
+    color: rgb(63, 63, 206);
+    text-decoration: none;
+}
+
+.create-account-link-text:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
+
+
+/* In your CSS */
+
+
+
+
+ /* Add these styles to your existing signin.css */
