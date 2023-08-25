@@ -147,7 +147,7 @@
 
 
 .error-container {
-  height: 25px; /* Fixed height for the error message container */
+  height: 45px; /* Fixed height for the error message container */
   overflow: hidden; /* Hide overflowing content */
   transition: height 0.3s ease; /* Smooth transition when showing/hiding the error message */
 }
