@@ -26,10 +26,11 @@
 
 }
 
-.register h2 {
- margin-right: 14.5rem; /* Adjust the value as needed */
-}
+.marginright h2 {
 
+    margin-right: 14.5rem; /* Adjust the value as needed */
+   
+}
 .register span{
   color: #565656;
   margin-right: 6rem;
@@ -181,8 +182,5 @@
   line-height: 49px;
   letter-spacing: -0.02em;
   margin-top: 1rem;
-  margin-left: 14.5rem;
-
-
 
  }

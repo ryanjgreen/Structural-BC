@@ -46,10 +46,12 @@ export default function Form() {
                 <div className="register">
                     <div className="col-1">
                         {!signUpSuccess && (
-                            <div>
+                            <div className="marginright">
                                 <h2>Sign Up</h2>
+    
                                 <span>Register and enjoy the service</span>
                             </div>
+                            
                         )}
 
                         {signUpSuccess ? (
