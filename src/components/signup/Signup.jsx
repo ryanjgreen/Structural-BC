@@ -53,7 +53,7 @@ export default function Form() {
                         )}
 
                         {signUpSuccess ? (
-                           <div className="success-message">
+                           <div className="success-message2">
                            <h2>Registered successfully!</h2>
                            <div className="success-checkmark">
                              <FaCheckCircle className="checkmark-icon" /> {/* Use the spinning icon */}

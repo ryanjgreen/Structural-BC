@@ -172,3 +172,16 @@
     display: initial;
   }
 }
+
+
+.success-message2 h2 {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 49px;
+  letter-spacing: -0.02em;
+  margin-top: 1rem;
+
+
+
+ }
