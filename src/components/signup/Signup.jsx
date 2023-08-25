@@ -19,7 +19,7 @@ export default function Form() {
             }
     
             const { firstName, lastName, email, password } = formData; // Destructure the fields
-            const response = await axios.post('https://structuralbc-956ac776b3e6.herokuapp.com', {
+            const response = await axios.post('https://structuralbc-956ac776b3e6.herokuapp.com/register', {
                 firstName,
                 lastName,
                 email,
