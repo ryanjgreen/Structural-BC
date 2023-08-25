@@ -27,7 +27,7 @@ const CombinedQuestions = () => {
     const opt = {
       margin: 30,
       filename: 'Specified_Lateral_Earthquake_Force.pdf',
-      image: { type: 'jpeg', quality: .8 },
+      image: { type: 'jpeg', quality: 1.1 },
       html2canvas: { scale: 3 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     };
