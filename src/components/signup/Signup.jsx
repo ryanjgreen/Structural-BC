@@ -64,11 +64,11 @@ export default function Form() {
                         ) : (
                             <form id='form' className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
                                 <input type="text" {...register("firstName", { required: true })} placeholder='first name' />
-                                {errors.firstName?.type === "required" && <p className="error-message">First name is required</p>}
+                                {errors.firstName?.type === "required" && <p className="error-message"></p>}
                                 <input type="text" {...register("lastName", { required: true })} placeholder='last name' />
-                                {errors.lastName?.type === "required" && <p className="error-message">Last name is required</p>}
+                                {errors.lastName?.type === "required" && <p className="error-message"></p>}
                                 <input type="email" {...register("email", { required: true })} placeholder='email address' />
-                                {errors.email?.type === "required" && <p className="error-message">Email is required</p>}
+                                {errors.email?.type === "required" && <p className="error-message"></p>}
                                 {emailConflict && <p className="email-conflict">Email already in use</p>}
                                 <input type="password" {...register("password")} placeholder='password' />
                                 <input type="password" {...register("confirmpwd")} placeholder='confirm password' />
