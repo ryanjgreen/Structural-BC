@@ -23,39 +23,51 @@ const CombinedQuestions = () => {
 
   const handleSaveAsPDF = async () => {
     const content = document.querySelector('.values'); // Get the content to convert
-
+  
     const opt = {
       margin: 30,
       filename: 'Specified_Lateral_Earthquake_Force.pdf',
       image: { type: 'jpeg', quality: 1 },
-      html2canvas: { scale: 3 },
+      html2canvas: {
+        scale: 3,
+        width: content.scrollWidth, // Explicitly set width
+        height: content.scrollHeight, // Explicitly set height
+      },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     };
-
+  
     // Create a canvas from the content
-    const canvas = await html2canvas(content);
-
+    const canvas = await html2canvas(content, opt.html2canvas); // Pass html2canvas options here
+  
     // Convert canvas to an image
     const imgData = canvas.toDataURL('image/jpeg', 1.0);
-
+  
     // Create a PDF instance
     const pdf = new jsPDF(opt.jsPDF);
-
+  
     // Add the image to the PDF
-    pdf.addImage(imgData, 'JPEG', opt.margin, opt.margin, pdf.internal.pageSize.getWidth() - 2 * opt.margin, pdf.internal.pageSize.getHeight() - 2 * opt.margin);
-
+    pdf.addImage(
+      imgData,
+      'JPEG',
+      opt.margin,
+      opt.margin,
+      pdf.internal.pageSize.getWidth() - 2 * opt.margin,
+      pdf.internal.pageSize.getHeight() - 2 * opt.margin
+    );
+  
     // Save the PDF
     pdf.save(opt.filename);
-
+  
     // Add the "clicked" class to initiate the animation
     const button = document.querySelector('.save-pdf-button');
     button.classList.add('clicked');
-
+  
     // Remove the "clicked" class after a short delay to reset the animation
     setTimeout(() => {
       button.classList.remove('clicked');
     }, 300);
   };
+  
 
 
   const [rd, setRd] = useState(0);
