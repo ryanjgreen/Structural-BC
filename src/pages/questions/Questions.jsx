@@ -25,7 +25,7 @@ const CombinedQuestions = () => {
     const content = document.querySelector('.values'); // Get the content to convert
 
     const opt = {
-      margin: 22,
+      margin: 30,
       filename: 'Specified_Lateral_Earthquake_Force.pdf',
       image: { type: 'jpeg', quality: 1 },
       html2canvas: { scale: 3 },
