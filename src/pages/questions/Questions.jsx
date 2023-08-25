@@ -214,7 +214,7 @@ const CombinedQuestions = () => {
     console.log("Data to send to backend:", requestData); // Add this console log to check the data being sent
 
     // Make a POST request to your backend server
-    fetch("https://structuralbc-cea735a41380.herokuapp.com/", {
+    fetch("https://structuralbc-cea735a41380.herokuapp.com/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
