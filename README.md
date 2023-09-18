@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Structural BC - Modernizing Seismic Engineering
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Structural BC Logo](src/assets/logo.svg)
 
-## Available Scripts
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [How to Use](#how-to-use)
 
-In the project directory, you can run:
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Structural BC is a service-based business aimed at revolutionizing seismic engineering practices. Our mission is to reduce calculation time for structural engineers by providing a user-friendly Specified Lateral Earthquake Force calculator. This calculator takes into account various parameters crucial for seismic design, making it an indispensable tool for engineers working on earthquake-resistant structures.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **Location-Specific Seismic Data**: Structural BC leverages government APIs to retrieve location-specific seismic data, ensuring accurate calculations based on the project's geographical context.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Customizable Parameters**: The calculator allows users to input a wide range of parameters, including:
+    - Location
+    - Site Class (e.g., hard rock, stiff soil)
+    - Earthquake Importance Factor (e.g., post-disaster for schools and hospitals, normal for houses)
+    - Structural System (moment frame, braced frame, shear wall)
+    - Building Material (timber, steel, concrete, masonry)
+    - Total Building Weight and Height
+    - Individual Storey Details
+    - Seismic Force-Resisting System (SFRS) Type
 
-### `npm run build`
+- **Dynamic Website**: We have designed and implemented a dynamic website using React, JavaScript, and CSS, providing an intuitive user interface for easy data input and result visualization.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Efficient Backend**: The backend is powered by Python Flask, ensuring seamless data processing and communication between the frontend and external APIs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies Used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Frontend**:
+    - React
+    - JavaScript
+    - CSS
 
-### `npm run eject`
+- **Backend**:
+    - Python Flask
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **External APIs**:
+    - Government APIs for seismic data
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## How to Use
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To use the Structural BC Specified Lateral Earthquake Force calculator, follow these steps:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Visit the [Structural BC Website](https://www.structuralbc.com).
 
-## Learn More
+2. Create an account by navigating to the sign up, then sign in and navigate to the calculators page.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Input your project details, including location, site class, earthquake importance factor, structural system, building material, weight and height, storey details, and SFRS type.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. Click the "Calculate" button to generate the specified lateral earthquake force for your project.
 
-### Code Splitting
+5. Review and analyze the results, which will be displayed on the website.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
